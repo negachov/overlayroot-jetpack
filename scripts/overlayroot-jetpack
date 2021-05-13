@@ -1,0 +1,12 @@
+if ! mount -o remount,ro /mnt; then
+  echo "ERROR: remounting /mnt fail..." > /dev/kmsg;
+  exec /bin/bash;
+fi
+
+if ! insmod "/mnt/lib/modules/$(uname -r)/kernel/fs/overlayfs/overlay.ko"; then
+  echo "ERROR: insmod overlay.ko fail..." > /dev/kmsg;
+  exec /bin/bash;
+fi
+
+export rootmnt=/mnt
+bash /scripts/overlayroot

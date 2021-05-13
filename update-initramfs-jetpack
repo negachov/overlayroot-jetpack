@@ -1,0 +1,24 @@
+#!/bin/bash -eu
+
+#tempdir=$(mktemp -d)
+#trap "rm -r $tempdir" EXIT
+tempdir=/var/tmp/hoge
+mkdir /var/tmp/hoge
+
+if [ ! -f /boot/initrd.orig ]; then
+  /bin/cp -p /boot/initrd /boot/initrd.orig
+fi
+
+/bin/zcat /boot/initrd.orig |(cd $tempdir; /bin/cpio -id)
+
+(cd $tempdir; /bin/cp -p /bin/kmod bin)
+(cd $tempdir; /bin/ln -s /bin/kmod sbin/modprobe)
+(cd $tempdir; /bin/ln -s /bin/kmod sbin/lsmod)
+(cd $tempdir; /bin/ln -s /bin/kmod sbin/insmod)
+(cd $tempdir; /bin/cp -p /bin/uname bin)
+(cd $tempdir; /bin/cp -p /bin/dash bin)
+(cd $tempdir; /bin/ln -s /bin/dash bin/sh)
+
+/bin/cat patch/init.patch |(cd $tempdir; /usr/bin/patch)
+
+(cd $tempdir; /usr/bin/find . |/bin/cpio -R 0:0 -o -H newc) |/bin/gzip > /boot/initrd
