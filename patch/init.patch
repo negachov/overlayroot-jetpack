@@ -1,13 +1,14 @@
-*** init.orig	2021-02-20 01:45:28.000000000 +0900
---- init	2021-05-13 23:46:26.667371088 +0900
+*** init.orig	2021-05-14 16:11:10.420039353 +0900
+--- init	2021-05-14 16:11:50.944686024 +0900
 ***************
 *** 218,223 ****
---- 218,225 ----
+--- 218,226 ----
   mount -o bind /proc /mnt/proc;
   mount -o bind /sys /mnt/sys;
   mount -o bind /dev/ /mnt/dev;
-+
++ 
 + . /scripts/overlayroot-jetpack
-+
++ 
   cd /mnt;
   cp /etc/resolv.conf etc/resolv.conf
+  
