@@ -1,9 +1,7 @@
 #!/bin/bash -eu
 
-#tempdir=$(mktemp -d)
-#trap "rm -r $tempdir" EXIT
-tempdir=/var/tmp/hoge
-mkdir /var/tmp/hoge
+tempdir=$(mktemp -d)
+trap "rm -r $tempdir" EXIT
 
 if [ ! -f /boot/initrd.orig ]; then
   /bin/cp -p /boot/initrd /boot/initrd.orig
