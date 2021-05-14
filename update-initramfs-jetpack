@@ -17,6 +17,11 @@ fi
 (cd $tempdir; /bin/cp -p /bin/dash bin)
 (cd $tempdir; /bin/ln -s /bin/dash bin/sh)
 
+(cd $tempdir; /bin/mkdir scripts)
+(cd $tempdir; /bin/cp -p /usr/share/initramfs-tools/scripts/functions scripts)
+(cd $tempdir; /bin/cp -p /usr/share/initramfs-tools/scripts/init-bottom/overlayroot scripts)
+/bin/cp scripts/overlayroot-jetpack $tempdir/scripts
+
 /bin/cat patch/init.patch |(cd $tempdir; /usr/bin/patch)
 
 (cd $tempdir; /usr/bin/find . |/bin/cpio -R 0:0 -o -H newc) |/bin/gzip > /boot/initrd
