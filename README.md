@@ -1,3 +1,6 @@
+## system requirements
+JetPack 4.5.1 (tested Jetson Nano only)
+
 ## pre requirement
 
 ### install package
